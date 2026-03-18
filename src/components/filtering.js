@@ -30,6 +30,16 @@ export function initFiltering(elements, indexes) {
         }
 
         // @todo: #4.5 — отфильтровать данные используя компаратор
-        return data.filter(row => compare(row, state));
+        return data.filter(row => {
+            const filterState = { ...state };
+            if (state.totalFrom || state.totalTo) {
+                filterState.total = [
+                    state.totalFrom ? parseFloat(state.totalFrom) : undefined,
+                    state.totalTo ? parseFloat(state.totalTo) : undefined
+                ];
+            }
+
+            return compare(row, filterState);
+        });
     };
 }
