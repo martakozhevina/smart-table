@@ -12,12 +12,14 @@ export function initFiltering(elements) {
 
     const applyFiltering = (query, state, action) => {
         // @todo: #4.2 — обработать очистку поля
-        // сли нажата кнопка сброса сбрасываем связанное с ней поле
         if (action && action.name === 'clear') {
-            const fieldToClear = action.value; // Например, 'searchBySeller'
-            if (elements[fieldToClear]) {
-                elements[fieldToClear].value = '';
-                state[fieldToClear] = ''; // Очищаем значение в стейте, чтобы фильтр его не учитывал
+            const fieldToClear = action.dataset.field;
+            const input = action.parentElement.querySelector('input');
+            if (input) {
+                input.value = '';
+            }
+            if (state && fieldToClear) {
+                state[fieldToClear] = '';
             }
         }
 
